@@ -3,8 +3,15 @@
 #include <stdio.h>
 #include <mlx.h>
 #include <stdlib.h>
-#include "../Libft/libft.h"
+#include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 #include <math.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include "parser.h"
 #define TILE_SIZE 64
 #define WWIN 1280
 #define HWIN 720
@@ -12,7 +19,10 @@
 #define KEY_A 0x0061
 #define KEY_S 0x0073
 #define KEY_D 0x0064
+#define LEFT_ARROW 0xff51
+#define RIGHT_ARROW  0xff53
 #define KEY_ESC 0xff1b
+#include <sys/time.h>
 #ifndef M_PI
 #    define M_PI 3.14159265358979323846
 #endif
@@ -32,6 +42,7 @@ typedef struct s_game_data
 	float p_y;
 	double p_a;
 	int walk;
+	int side_walk;
 	int rotate;
 	void *mlx;
 	void *win;
@@ -42,6 +53,8 @@ typedef struct s_game_data
 	double fov;
 	double speed;
 	int cam_depth;
+	long long t1;
+	long long delta_time;
 }t_game_data;
 
 typedef struct s_ray
@@ -72,6 +85,36 @@ typedef struct s_walls
 	int color;
 }t_walls;
 
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_l;
+	int		endian;
+}	t_image;
+typedef struct s_data
+{
+	char		**map;
+	t_texture	texture[6];
+	int			fd;
+	int			m_max;
+	int			m_len;
+	int			m_width;
+	int			floor;
+	int			ceiling;
+	int			start_x;
+	int			start_y;
+	int			p_dir;
+	void		*mlx;
+	void		*window;
+	t_image		img;
+	t_game_data *game_data;
+}				t_data;
+
+int		key_hook(int keycode, t_data *data);
+int		f_exit(t_data *data);
+void	free_data(t_data *data);
 t_ray	create_ray(t_game_data *g_data, int x);
 float angle_normalizer(float a);
 #endif

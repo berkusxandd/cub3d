@@ -1,0 +1,22 @@
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
+F 120,100,5
+C 225,30,0
+
+
+
+
+
+
+
+1
+1
+11111
+1111111
+111111
+11N11
+11111
+1111
+111111   1
