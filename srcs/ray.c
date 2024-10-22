@@ -62,10 +62,10 @@ t_ray	create_ray(t_game_data *g_data, int x)
 			else
 				ray.side = 3;
 		}
-		if (ray.map_y <= 4 && ray.map_x <= 7 && ray.map_y >= 0   //hard coded map boundaries
+		if (ray.map_y < g_data->map_height && ray.map_x < g_data->map_width && ray.map_y > 0   //hard coded map boundaries
 			&& ray.map_x >= 0)
 		{
-			if (g_data->map[ray.map_y][ray.map_x] == '1')
+			if (g_data->map[ray.map_y][ray.map_x] == '1')    /////SEGFAULT
 				ray.hit = 1;
 		}
 		else

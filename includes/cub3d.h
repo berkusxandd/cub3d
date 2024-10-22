@@ -55,6 +55,7 @@ typedef struct s_game_data
 	int cam_depth;
 	long long t1;
 	long long delta_time;
+	t_data *data;
 }t_game_data;
 
 typedef struct s_ray

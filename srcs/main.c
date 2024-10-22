@@ -157,22 +157,14 @@ int	init_game_data(t_game_data *game_data)
 	game_data->win = mlx_new_window(game_data->mlx, WWIN, HWIN, "cub3d");
 	game_data->img_data = create_new_img(game_data->mlx);
 	game_data->t1 = 0;
-	game_data->p_x = 256;
-	game_data->p_y = 160;
+	game_data->p_x = 0;
+	game_data->p_y = 0;
 	game_data->p_a = 0;
 	game_data->walk = 0;
 	game_data->rotate = 0;
 	game_data->side_walk = 0;
 	game_data->map = malloc(sizeof(char *) * 6);
 	//                               when p_a = 0; ------>
-	game_data->map[0] = ft_strdup("11111111");
-	game_data->map[1] = ft_strdup("10000001");
-	game_data->map[2] = ft_strdup("10000001");
-	game_data->map[3] = ft_strdup("10000001");
-	game_data->map[4] = ft_strdup("11111111");
-	game_data->map[5] = NULL;
-	game_data->map_height = 5;
-	game_data->map_width = 8;
 	game_data->fov = 3.14159 / 4.0;
 	game_data->cam_depth = 10;
 	game_data->speed = 0.2;
@@ -232,17 +224,20 @@ int	main(int argc,char **argv)
 	t_data data;
 	t_game_data	game_data;
 
-	if (init_game_data(&game_data) != 0)
-		return (-1);
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
-	memset(&data, 0, sizeof(t_data));  //FT_MEMSET ?
+	ft_memset(&data, 0, sizeof(t_data));  //FT_MEMSET ?
 	if (parser(&data, argv[1]))
 		return (free_data(&data), EXIT_FAILURE);
-	// if (init_images(&data))
-	// 	return (free_data(&data), EXIT_FAILURE);
+	if (init_images(&data))
+		return (free_data(&data), EXIT_FAILURE);
+	if (init_game_data(&game_data) != 0)
+		return (-1);
+	printf("height : %d width: %d", data.m_len, data.m_width);
 	data.game_data = &game_data;
-
+	game_data.map = data.map;
+	game_data.map_height = data.m_len;
+	game_data.map_width = data.m_width;
 	mlx_hook(game_data.win, 2, 1L << 0, key_press_hook, &game_data);
 	mlx_hook(game_data.win, 3, 1L << 1, key_release_hook, &game_data);
 	mlx_loop_hook(game_data.mlx, game_loop, &game_data);
