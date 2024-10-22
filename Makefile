@@ -12,6 +12,8 @@ EVENTS_DIR = $(SRC_DIR)/events
 RENDER_DIR = $(SRC_DIR)/render
 
 SRC_FILES = main.c ray.c init_images.c free_data.c
+PARSER_FILES = check_map.c get_textures.c parser_utils.c parser.c
+
 
 SRCS =  $(addprefix $(SRC_DIR)/, $(SRC_FILES)) \
 		$(addprefix $(PARSER_DIR)/, $(PARSER_FILES)) \

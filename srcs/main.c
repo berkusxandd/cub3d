@@ -11,14 +11,6 @@ int	check_arg(int ac, char **av)
 	return (EXIT_SUCCESS);
 }
 
-void	start_game(t_data *data)
-{
-	mlx_hook(data->window, KeyPress, KeyPressMask, &key_hook, data);
-	mlx_hook(data->window, DestroyNotify, StructureNotifyMask, &f_exit, data);
-	mlx_loop(data->mlx);
-}
-
-
 void	mlx_put_pixel(t_img_data *img_data, int x, int y, int color)
 {
 	char	*dst;
