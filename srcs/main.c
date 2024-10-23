@@ -52,26 +52,6 @@ int get_pixel_color(t_texture *texture, int tex_x, int tex_y)
     return *(int *)(texture->addr + offset);
 }
 
-// int	pick_px_color(t_data *data, t_ray ray)
-// {
-// 	if (ray.side == 0)
-// 	{
-// 		return (0xFF0000);
-// 	}
-// 	else if (ray.side == 1)
-// 	{
-// 		return(0xFF0000);  // pa = 0
-// 	}
-// 	else if (ray.side == 2)
-// 	{
-// 		return(0xFFFFFF);
-// 	}
-// 	else
-// 	{
-// 		return(0x1700FF);
-// 	}
-// }
-
 void render_wall_texture(t_data *g_data, int x, int y,t_ray ray, float perp_dist, int draw_start)
 {
 	float wall_x;
@@ -79,13 +59,15 @@ void render_wall_texture(t_data *g_data, int x, int y,t_ray ray, float perp_dist
 	int tex_y;
 	int color;
 
-	if (ray.side == 0 || ray.side == 1)
+	if (ray.side < 2)
     	wall_x = ray.ray_y + perp_dist * ray.ray_dir_y;
 	else
     	wall_x = ray.ray_x + perp_dist * ray.ray_dir_x;
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)(g_data->texture[ray.side].width));
+	tex_x = (int)(wall_x * (g_data->texture[ray.side].width));
 	tex_y = ((y - draw_start) * g_data->texture[ray.side].height) / (HWIN / perp_dist);
+	if (ray.side == 0 || ray.side == 2)
+		tex_x = g_data->texture[ray.side].width - tex_x - 1;
     color = get_pixel_color(&g_data->texture[ray.side], tex_x, tex_y);
 	mlx_put_pixel(&g_data->img_data, x, y, color);
 }
@@ -235,6 +217,7 @@ int	main(int argc,char **argv)
 	if (init_data(&data))
 		return (free_data(&data), EXIT_FAILURE);
 	init_game_data(&data);
+	printf("*****%d %d ****", data.start_x, data.start_y);
 	mlx_hook(data.win, 2, 1L << 0, key_press_hook, &data);
 	mlx_hook(data.win, 3, 1L << 1, key_release_hook, &data);
 	mlx_loop_hook(data.mlx, game_loop, &data);
