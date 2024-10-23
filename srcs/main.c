@@ -44,24 +44,50 @@ t_walls	create_walls(float perp_dist)
 	return (walls);
 }
 
-int	pick_px_color(t_ray ray)
+int get_pixel_color(t_texture *texture, int tex_x, int tex_y)
 {
-	if (ray.side == 0)
-	{
-		return (0xFF0000);
-	}
-	else if (ray.side == 1)
-	{
-		return(0x00FF1F);
-	}
-	else if (ray.side == 2)
-	{
-		return(0xFFFFFF);
-	}
+    int bpp = 32;
+    int line_l = texture->width * (bpp / 8);
+    int offset = (tex_y * line_l) + (tex_x * (bpp / 8));
+    return *(int *)(texture->addr + offset);
+}
+
+// int	pick_px_color(t_data *data, t_ray ray)
+// {
+// 	if (ray.side == 0)
+// 	{
+// 		return (0xFF0000);
+// 	}
+// 	else if (ray.side == 1)
+// 	{
+// 		return(0xFF0000);  // pa = 0
+// 	}
+// 	else if (ray.side == 2)
+// 	{
+// 		return(0xFFFFFF);
+// 	}
+// 	else
+// 	{
+// 		return(0x1700FF);
+// 	}
+// }
+
+void render_wall_texture(t_data *g_data, int x, int y,t_ray ray, float perp_dist, int draw_start)
+{
+	float wall_x;
+	int tex_x;
+	int tex_y;
+	int color;
+
+	if (ray.side == 0 || ray.side == 1)
+    	wall_x = ray.ray_y + perp_dist * ray.ray_dir_y;
 	else
-	{
-		return(0x1700FF);
-	}
+    	wall_x = ray.ray_x + perp_dist * ray.ray_dir_x;
+	wall_x -= floor(wall_x);
+	tex_x = (int)(wall_x * (double)(g_data->texture[ray.side].width));
+	tex_y = ((y - draw_start) * g_data->texture[ray.side].height) / (HWIN / perp_dist);
+    color = get_pixel_color(&g_data->texture[ray.side], tex_x, tex_y);
+	mlx_put_pixel(&g_data->img_data, x, y, color);
 }
 
 void	render_walls(t_data *g_data)
@@ -71,7 +97,6 @@ void	render_walls(t_data *g_data)
 	t_ray	ray;
 	t_walls	walls;
 	float	perp_dist;
-	int		color;
 
 	x = 0;
 	while (x < WWIN)
@@ -86,18 +111,17 @@ void	render_walls(t_data *g_data)
 				perp_dist = (ray.map_y - ray.ray_y / TILE_SIZE + (1
 							- ray.step_y) / 2) / ray.ray_dir_y;
 			walls = create_walls(perp_dist);
-			color = pick_px_color(ray);
 			y = 0;
 			while (y < HWIN)
 			{
 				if (y > walls.draw_start && y < walls.draw_end)
-					mlx_put_pixel(&g_data->img_data, x, y, color);
+					render_wall_texture(g_data, x, y, ray, perp_dist,walls.draw_start);
 				else
 				{
 					if (y > 0 && y < walls.draw_start)
-						mlx_put_pixel(&g_data->img_data, x, y, g_data->ceiling);
+						mlx_put_pixel(&g_data->img_data, x, y, g_data->texture[C].color);
 					else
-						mlx_put_pixel(&g_data->img_data, x, y, g_data->floor);
+						mlx_put_pixel(&g_data->img_data, x, y, g_data->texture[F].color);
 				}
 				y++;
 			}
@@ -206,9 +230,9 @@ int	main(int argc,char **argv)
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
 	ft_memset(&data, 0, sizeof(t_data));
-	if (init_data(&data))
-		return (free_data(&data), EXIT_FAILURE);
 	if (parser(&data, argv[1]))
+		return (free_data(&data), EXIT_FAILURE);
+	if (init_data(&data))
 		return (free_data(&data), EXIT_FAILURE);
 	init_game_data(&data);
 	mlx_hook(data.win, 2, 1L << 0, key_press_hook, &data);

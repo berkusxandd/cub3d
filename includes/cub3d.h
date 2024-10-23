@@ -92,14 +92,6 @@ typedef struct s_walls
 	int			color;
 }				t_walls;
 
-typedef struct s_image
-{
-	void		*img;
-	char		*addr;
-	int			bpp;
-	int			line_l;
-	int			endian;
-}				t_image;
 
 int	init_data(t_data *data);
 int				key_hook(int keycode, t_data *data);
