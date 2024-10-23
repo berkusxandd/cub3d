@@ -108,4 +108,5 @@ void			free_data(t_data *data);
 t_ray			create_ray(t_data *data, int x);
 float			angle_normalizer(float a);
 t_img_data	create_new_img(void *mlx);
+int init_game_data(t_data *data);
 #endif
