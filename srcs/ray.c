@@ -65,8 +65,6 @@ t_ray	create_ray(t_data *data, int x)
 		if (ray.map_y < data->m_len && ray.map_x < data->m_width && ray.map_y >= 0
 			&& ray.map_x >= 0)
 		{
-			printf("Y : %d X : %d\n", ray.map_y , ray.map_x);
-			printf("MAP : %s", data->map[0]);
 			if (data->map[ray.map_y][ray.map_x] == '1')    /////SEGFAULT
 				ray.hit = 1;
 		}

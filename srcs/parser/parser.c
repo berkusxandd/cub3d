@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 18:41:28 by tkaragoz          #+#    #+#             */
-/*   Updated: 2024/10/23 16:55:55 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/23 17:17:46 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	get_map(t_data *data)
 	i = 0;
 	while (line)
 	{
-		printf("*****%d******* %d ******", i,data->m_len);
 		data->map[i] = ft_calloc(data->m_width + 1, sizeof(char));
 		data->map[i] = ft_memcpy(data->map[i], line, ft_strlen(line) - 1);
 		free(line);
@@ -73,8 +72,8 @@ int	parser(t_data *data, char *f_name)
 	data->fd = open(f_name, O_RDONLY);
 	if (data->fd < 0)
 		return (ft_putendl_fd("Error\nError opening map file!", 2), 1);
-	// if (get_textures(data))
-	// 	return (close(data->fd), ft_putendl_fd("Error\nInvalid Conf.!", 2), 1);
+	if (get_textures(data))
+		return (close(data->fd), ft_putendl_fd("Error\nInvalid Conf.!", 2), 1);
 	if (get_map(data))
 		return (close(data->fd), ft_putendl_fd("Error\nAlloc. problem!", 2), 1);
 	if (check_map(data))
