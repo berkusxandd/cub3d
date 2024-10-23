@@ -6,19 +6,17 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 20:45:57 by tkaragoz          #+#    #+#             */
-/*   Updated: 2024/10/17 14:40:49 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/23 16:41:23 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	is_ok(char c, int y)
+static int	is_ok(char c)
 {
-	if (y == 0 && c == '\n')
-		return (1);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '0')
 		return (0);
-	if (c == '1' || c == '0' || c == ' ' || c == '\n')
+	if (c == '1' || c == '0' || c == ' ')
 		return (0);
 	return (1);
 }
@@ -34,7 +32,7 @@ static int	invalid_char(t_data *data, char **map)
 		y = -1;
 		while (map[x][++y])
 		{
-			if (is_ok(map[x][y], y))
+			if (is_ok(map[x][y]))
 				return (EXIT_FAILURE);
 			if (map[x][y] == 'N' || map[x][y] == 'S' || map[x][y] == 'W' ||
 				map[x][y] == 'E')
@@ -63,8 +61,6 @@ static int	check_walls(t_data *data, char **map, int x, int y)
 		return (EXIT_FAILURE);
 	if (map[x - 1][y] == '\0' || map[x + 1][y] == '\0' ||
 		map[x][y - 1] == '\0' || map[x][y + 1] == '\0')
-		return (EXIT_FAILURE);
-	if (map[x][y + 1] == '\n')
 		return (EXIT_FAILURE);
 	if (map[x - 1][y] == '0')
 		return (check_walls(data, map, x - 1, y));
@@ -95,13 +91,16 @@ static void	restore_map(char **map)
 
 int	check_map(t_data *data)
 {
+	int	check_nl;
 	int	x;
 	int	y;
 
-	while (data->map[--data->m_len][0] == '\n')
-		data->map[data->m_len][0] = '\0';
-	data->m_len++;
-	if (invalid_char(data, data->map))
+	while (data->map[data->m_len - 1][0] == '\0')
+		data->m_len--;
+	check_nl = data->m_len - 1;
+	while (check_nl && data->map[check_nl][0])
+		check_nl--;
+	if (check_nl > 0 || invalid_char(data, data->map))
 		return (EXIT_FAILURE);
 	if (!data->p_dir)
 		return (EXIT_FAILURE);

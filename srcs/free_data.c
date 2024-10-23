@@ -13,11 +13,11 @@ void	free_data(t_data *data)
 	while (++i < 4)
 		if (t[i].img)
 			mlx_destroy_image(data->mlx, t[i].img);
-	mlx_destroy_image(data->mlx, data->img.img);
-	if (data->window)
+	mlx_destroy_image(data->mlx, data->img_data.img);
+	if (data->win)
 	{
-		mlx_destroy_window(data->mlx, data->window);
-		data->window = NULL;
+		mlx_destroy_window(data->mlx, data->win);
+		data->win = NULL;
 	}
 	mlx_destroy_display(data->mlx);
 	if (data->mlx)

@@ -1,15 +1,15 @@
 #include "../includes/cub3d.h"
 
-t_ray	create_ray(t_game_data *g_data, int x)
+t_ray	create_ray(t_data *data, int x)
 {
 	t_ray	ray;
 
 	ray.hit = 0;
 	ray.hit_out_of_map = 0;
-	ray.ray_angle = angle_normalizer((g_data->p_a - g_data->fov / 2.0) + ((float)x / WWIN)
-		* g_data->fov);
-	ray.ray_x = g_data->p_x;
-	ray.ray_y = g_data->p_y;
+	ray.ray_angle = angle_normalizer((data->p_a - data->fov / 2.0) + ((float)x / WWIN)
+		* data->fov);
+	ray.ray_x = data->p_x;
+	ray.ray_y = data->p_y;
 	ray.ray_dir_x = cos(ray.ray_angle);
 	ray.ray_dir_y = sin(ray.ray_angle);
 	ray.delta_dist_x = fabs(1 / ray.ray_dir_x);
@@ -62,14 +62,19 @@ t_ray	create_ray(t_game_data *g_data, int x)
 			else
 				ray.side = 3;
 		}
-		if (ray.map_y < g_data->map_height && ray.map_x < g_data->map_width && ray.map_y > 0   //hard coded map boundaries
+		if (ray.map_y < data->m_len && ray.map_x < data->m_width && ray.map_y >= 0
 			&& ray.map_x >= 0)
 		{
-			if (g_data->map[ray.map_y][ray.map_x] == '1')    /////SEGFAULT
+			printf("Y : %d X : %d\n", ray.map_y , ray.map_x);
+			printf("MAP : %s", data->map[0]);
+			if (data->map[ray.map_y][ray.map_x] == '1')    /////SEGFAULT
 				ray.hit = 1;
 		}
 		else
+		{
+			ray.hit = 1;
 			ray.hit_out_of_map = 1;
+		}
 	}
 	return (ray);
 }

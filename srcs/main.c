@@ -64,7 +64,7 @@ int	pick_px_color(t_ray ray)
 	}
 }
 
-void	render_walls(t_game_data *g_data)
+void	render_walls(t_data *g_data)
 {
 	int		x;
 	int		y;
@@ -105,17 +105,17 @@ void	render_walls(t_game_data *g_data)
 		x++;
 	}
 }
-int	render(t_game_data *game_data)
+int	render(t_data *data)
 {
-	mlx_destroy_image(game_data->mlx, game_data->img_data.img);
-	game_data->img_data = create_new_img(game_data->mlx);
-	render_walls(game_data);
-	mlx_put_image_to_window(game_data->mlx, game_data->win,
-		game_data->img_data.img, 0, 0);
+	mlx_destroy_image(data->mlx, data->img_data.img);
+	data->img_data = create_new_img(data->mlx);
+	render_walls(data);
+	mlx_put_image_to_window(data->mlx, data->win,
+		data->img_data.img, 0, 0);
 	return (0);
 }
 
-int	key_press_hook(int keycode, t_game_data *game_data)
+int	key_press_hook(int keycode, t_data *game_data)
 {
 	if (keycode == KEY_W)
 		game_data->walk = 1;
@@ -134,7 +134,7 @@ int	key_press_hook(int keycode, t_game_data *game_data)
 	return (0);
 }
 
-int	key_release_hook(int keycode, t_game_data *g_data)
+int	key_release_hook(int keycode, t_data *g_data)
 {
 	if (keycode == KEY_W)
 		g_data->walk = 0;
@@ -150,26 +150,6 @@ int	key_release_hook(int keycode, t_game_data *g_data)
 		g_data->rotate = 0;
 	return (0);
 }
-
-int	init_game_data(t_game_data *game_data)
-{
-	game_data->mlx = mlx_init();
-	game_data->win = mlx_new_window(game_data->mlx, WWIN, HWIN, "cub3d");
-	game_data->img_data = create_new_img(game_data->mlx);
-	game_data->t1 = 0;
-	game_data->p_x = 0;
-	game_data->p_y = 0;
-	game_data->p_a = 0;
-	game_data->walk = 0;
-	game_data->rotate = 0;
-	game_data->side_walk = 0;
-	game_data->map = malloc(sizeof(char *) * 6);
-	//                               when p_a = 0; ------>
-	game_data->fov = 3.14159 / 4.0;
-	game_data->cam_depth = 10;
-	game_data->speed = 0.2;
-	return (0);
-}
 float	angle_normalizer(float a)
 {
 	if (a < 0)
@@ -179,7 +159,7 @@ float	angle_normalizer(float a)
 	return (a);
 }
 
-void	set_elapsed_time(t_game_data *g_data)
+void	set_elapsed_time(t_data *g_data)
 {
 	struct timeval	tv;
 	long			t2;
@@ -193,7 +173,7 @@ void	set_elapsed_time(t_game_data *g_data)
 	printf("dT = %lld\n", g_data->delta_time);
 }
 
-int	game_loop(t_game_data *g_data)
+int	game_loop(t_data *g_data)
 {
 	render(g_data);
 	set_elapsed_time(g_data);
@@ -222,25 +202,18 @@ int	game_loop(t_game_data *g_data)
 int	main(int argc,char **argv)
 {
 	t_data data;
-	t_game_data	game_data;
 
 	if (check_arg(argc, argv))
 		return (EXIT_FAILURE);
-	ft_memset(&data, 0, sizeof(t_data));  //FT_MEMSET ?
+	ft_memset(&data, 0, sizeof(t_data));
+	if (init_data(&data))
+		return (free_data(&data), EXIT_FAILURE);
 	if (parser(&data, argv[1]))
 		return (free_data(&data), EXIT_FAILURE);
-	if (init_images(&data))
-		return (free_data(&data), EXIT_FAILURE);
-	if (init_game_data(&game_data) != 0)
-		return (-1);
-	printf("height : %d width: %d", data.m_len, data.m_width);
-	data.game_data = &game_data;
-	game_data.map = data.map;
-	game_data.map_height = data.m_len;
-	game_data.map_width = data.m_width;
-	mlx_hook(game_data.win, 2, 1L << 0, key_press_hook, &game_data);
-	mlx_hook(game_data.win, 3, 1L << 1, key_release_hook, &game_data);
-	mlx_loop_hook(game_data.mlx, game_loop, &game_data);
-	// mlx_hook(game_data.win, DestroyNotify, StructureNotifyMask, &f_exit, &data);
-	mlx_loop(game_data.mlx);
+
+	// mlx_hook(data.win, 2, 1L << 0, key_press_hook, &data);
+	// mlx_hook(data.win, 3, 1L << 1, key_release_hook, &data);
+	// mlx_loop_hook(data.mlx, game_loop, &data);
+	// // mlx_hook(game_data.win, DestroyNotify, StructureNotifyMask, &f_exit, &data);
+	// mlx_loop(data.mlx);
 }
