@@ -82,6 +82,8 @@ typedef struct s_ray
 	int			hit;
 	int			hit_out_of_map;
 	int			side;
+	int hit_x;
+	int hit_y;
 }				t_ray;
 
 typedef struct s_walls

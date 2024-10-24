@@ -6,8 +6,7 @@ t_ray	create_ray(t_data *data, int x)
 
 	ray.hit = 0;
 	ray.hit_out_of_map = 0;
-	ray.ray_angle = angle_normalizer((data->p_a - data->fov / 2.0) + ((float)x / WWIN)
-		* data->fov);
+	ray.ray_angle = (data->p_a - data->fov / 2.0) + ((float)x / WWIN) * data->fov;
 	ray.ray_x = data->p_x;
 	ray.ray_y = data->p_y;
 	ray.ray_dir_x = cos(ray.ray_angle);
@@ -42,11 +41,10 @@ t_ray	create_ray(t_data *data, int x)
 	}
 	while (ray.hit == 0 && ray.hit_out_of_map != 1)
 	{
-		if (ray.side_dist_x < ray.side_dist_y)
+		if (fabsf(ray.side_dist_x) < fabsf(ray.side_dist_y))
 		{
 			ray.side_dist_x += ray.delta_dist_x;
 			ray.map_x += ray.step_x;
-			ray.side = 0;
 			if (ray.ray_angle > M_PI / 2 && ray.ray_angle < 3 * M_PI / 2)
 				ray.side = 0;
 			else
@@ -65,7 +63,7 @@ t_ray	create_ray(t_data *data, int x)
 		if (ray.map_y < data->m_len && ray.map_x < data->m_width && ray.map_y >= 0
 			&& ray.map_x >= 0)
 		{
-			if (data->map[ray.map_y][ray.map_x] == '1')    /////SEGFAULT
+			if (data->map[ray.map_y][ray.map_x] == '1')
 				ray.hit = 1;
 		}
 		else
