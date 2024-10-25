@@ -197,23 +197,63 @@ void	set_elapsed_time(t_data *g_data)
 	printf("dT = %lld\n", g_data->delta_time);
 }
 
+int is_walking_to_wall(t_data *g_data)
+{
+	float new_x;
+	float new_y;
+	float offset;
+
+	offset = TILE_SIZE / 2 * g_data->walk;
+	new_x = g_data->p_x;
+	new_y = g_data->p_y;
+	new_x += g_data->walk * cos(g_data->p_a) * g_data->speed
+			* g_data->delta_time + offset;
+	new_y += g_data->walk * sin(g_data->p_a) * g_data->speed
+			* g_data->delta_time + offset;
+
+	
+	return (g_data->map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] == '1');
+}
+
+int is_sidewalking_to_wall(t_data *g_data)
+{
+	float new_x;
+	float new_y;
+	float offset;
+
+	offset = TILE_SIZE / 2 * g_data->side_walk;
+	new_x = g_data->p_x;
+	new_y = g_data->p_y;
+	new_x += g_data->side_walk * sin(g_data->p_a) * g_data->speed
+			* g_data->delta_time + offset;
+	new_y -= g_data->side_walk * cos(g_data->p_a) * g_data->speed
+			* g_data->delta_time + offset;
+
+	return (g_data->map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] == '1');
+}
 
 int	game_loop(t_data *g_data)
 {
 	set_elapsed_time(g_data);
 	if (g_data->walk != 0)
 	{
+		if (is_walking_to_wall(g_data) == 0)
+		{
 		g_data->p_x += g_data->walk * cos(g_data->p_a) * g_data->speed
 			* g_data->delta_time;
 		g_data->p_y += g_data->walk * sin(g_data->p_a) * g_data->speed
 			* g_data->delta_time;
+		}
 	}
 	if (g_data->side_walk != 0)
 	{
+		if (is_sidewalking_to_wall(g_data) == 0)
+		{
 		g_data->p_x += g_data->side_walk * sin(g_data->p_a) * g_data->speed
 			* g_data->delta_time;
 		g_data->p_y -= g_data->side_walk * cos(g_data->p_a) * g_data->speed
 			* g_data->delta_time;
+		}
 	}
 	if (g_data->rotate == -1)
 		g_data->p_a -= 0.005 * g_data->delta_time;
