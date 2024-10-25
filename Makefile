@@ -11,7 +11,7 @@ PARSER_DIR = $(SRC_DIR)/parser
 EVENTS_DIR = $(SRC_DIR)/events
 RENDER_DIR = $(SRC_DIR)/render
 
-SRC_FILES = main.c ray.c init_data.c free_data.c
+SRC_FILES = main.c ray.c init_data.c free_data.c mlx_utils.c movement.c collision.c hooks.c calculations.c
 PARSER_FILES = check_map.c get_textures.c parser_utils.c parser.c
 
 
@@ -23,7 +23,7 @@ OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = mlx
-MLX = -L $(MLX_DIR) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm    # I DELETED -lz FROM THE END
+MLX = -L $(MLX_DIR) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 INCLUDES = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 

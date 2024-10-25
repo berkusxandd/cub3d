@@ -82,8 +82,8 @@ typedef struct s_ray
 	int			hit;
 	int			hit_out_of_map;
 	int			side;
-	int hit_x;
-	int hit_y;
+	int			hit_x;
+	int			hit_y;
 }				t_ray;
 
 typedef struct s_walls
@@ -94,13 +94,44 @@ typedef struct s_walls
 	int			color;
 }				t_walls;
 
+typedef struct s_wall_tex
+{
+	int			x;
+	int			y;
+	int			tex_x;
+	int			tex_y;
+	int			color;
+}				t_wall_tex;
 
-int	init_data(t_data *data);
-int				key_hook(int keycode, t_data *data);
+int				init_data(t_data *data);
+t_ray			create_ray(t_data *data, int x);
+int				init_game_data(t_data *data);
+///// FREE
 int				f_exit(t_data *data);
 void			free_data(t_data *data);
-t_ray			create_ray(t_data *data, int x);
+
+///// MLX UTILS
+t_img_data		create_new_img(void *mlx);
+void			mlx_put_pixel(t_img_data *img_data, int x, int y, int color);
+int				get_pixel_color(t_texture *texture, int tex_x, int tex_y);
+t_img_data		create_new_img(void *mlx);
+
+///// MOVEMENT
+float			side_walk_y(t_data *g_data);
+float			side_walk_x(t_data *g_data);
+void			player_move(t_data *g_data);
+float			move_y(t_data *g_data);
+float			move_x(t_data *g_data);
+int				is_sidewalking_to_wall(t_data *g_data);
+int				is_walking_to_wall(t_data *g_data);
+
+///// HOOKS
+int				key_hook(int keycode, t_data *data);
+int				key_release_hook(int keycode, t_data *g_data);
+int				key_press_hook(int keycode, t_data *game_data);
+
+///// CALCULATIONS
+float			get_perp_dist(t_data *g_data, t_ray ray);
 float			angle_normalizer(float a);
-t_img_data	create_new_img(void *mlx);
-int init_game_data(t_data *data);
+void			set_elapsed_time(t_data *g_data);
 #endif
