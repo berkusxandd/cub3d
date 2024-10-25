@@ -201,15 +201,13 @@ int is_walking_to_wall(t_data *g_data)
 {
 	float new_x;
 	float new_y;
-	float offset;
-
-	offset = TILE_SIZE / 2 * g_data->walk;
+	//add new_x_map new_y_map and check boundaries
 	new_x = g_data->p_x;
 	new_y = g_data->p_y;
 	new_x += g_data->walk * cos(g_data->p_a) * g_data->speed
-			* g_data->delta_time + offset;
+			* g_data->delta_time;
 	new_y += g_data->walk * sin(g_data->p_a) * g_data->speed
-			* g_data->delta_time + offset;
+			* g_data->delta_time;
 
 	
 	return (g_data->map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] == '1');
@@ -219,15 +217,14 @@ int is_sidewalking_to_wall(t_data *g_data)
 {
 	float new_x;
 	float new_y;
-	float offset;
+	//add new_x_map new_y_map and check boundaries
 
-	offset = TILE_SIZE / 2 * g_data->side_walk;
 	new_x = g_data->p_x;
 	new_y = g_data->p_y;
 	new_x += g_data->side_walk * sin(g_data->p_a) * g_data->speed
-			* g_data->delta_time + offset;
+			* g_data->delta_time;
 	new_y -= g_data->side_walk * cos(g_data->p_a) * g_data->speed
-			* g_data->delta_time + offset;
+			* g_data->delta_time;
 
 	return (g_data->map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] == '1');
 }

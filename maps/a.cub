@@ -1,13 +1,13 @@
-NO ./maps/teapot.xpm
-SO ./maps/teapot.xpm
-WE ./maps/teapot.xpm
-EA ./maps/teapot.xpm
+NO ./maps/greystone.xpm
+SO ./maps/greystone.xpm
+WE ./maps/greystone.xpm
+EA ./maps/greystone.xpm
 F 220,100,205
 C 225,30,0
 
 11111111
 10000001
-100N0001
+100000N1
 10000001
 10000001
 11111111
