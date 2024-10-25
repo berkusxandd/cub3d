@@ -102,6 +102,12 @@ int	render(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->img_data.img);
 	data->img_data = create_new_img(data->mlx);
+	if (data->img_data.img == NULL)
+	{
+		ft_putstr_fd("Error putting image,\n",1);
+		free_data(data);
+		exit(EXIT_FAILURE);
+	}
 	render_walls(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_data.img, 0, 0);
 	return (0);

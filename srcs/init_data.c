@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:52:52 by tkaragoz          #+#    #+#             */
-/*   Updated: 2024/10/25 14:34:55 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/25 15:58:31 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ static int	init_txtr_imgs(t_data *data)
 int init_game_data(t_data *data)
 {
 	data->t1 = 0;
-	printf("START_X = %d  START_Y = %d", data->start_x, data->start_y);
-	data->p_x = data->start_y * TILE_SIZE;
-	data->p_y = data->start_x * TILE_SIZE;
-	data->p_a = data->p_dir * M_PI / 2;
+	data->p_x = data->start_y * TILE_SIZE + 30;
+	data->p_y = data->start_x * TILE_SIZE + 30;
+	data->p_a = 0;
 	data->walk = 0;
 	data->rotate = 0;
 	data->side_walk = 0;
-	//                               when p_a = 0; ------>
 	data->fov = M_PI / 4.0;
 	data->speed = 0.2;
 	return 0;
