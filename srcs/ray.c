@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:20:23 by bince             #+#    #+#             */
-/*   Updated: 2024/10/25 13:20:41 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:15:45 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_ray	ray_init(t_data *data, int x)
 	return (ray);
 }
 
-void	set_dXY(t_ray *ray)
+void	set_dxy(t_ray *ray)
 {
 	if (ray->ray_dir_x < 0)
 	{
@@ -84,7 +84,7 @@ t_ray	create_ray(t_data *data, int x)
 	t_ray	ray;
 
 	ray = ray_init(data, x);
-	set_dXY(&ray);
+	set_dxy(&ray);
 	while (ray.hit == 0 && ray.hit_out_of_map != 1)
 	{
 		if (fabsf(ray.side_dist_x) < fabsf(ray.side_dist_y))

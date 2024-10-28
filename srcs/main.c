@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/28 14:14:46 by bince             #+#    #+#             */
+/*   Updated: 2024/10/28 14:14:48 by bince            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	check_arg(int ac, char **av)
@@ -14,6 +26,7 @@ int	check_arg(int ac, char **av)
 t_walls	create_walls(float perp_dist)
 {
 	t_walls	walls;
+
 	walls.line_height = (int)(HWIN / perp_dist);
 	walls.draw_start = -walls.line_height / 2 + HWIN / 2;
 	walls.draw_end = walls.line_height / 2 + HWIN / 2;
@@ -30,7 +43,7 @@ int	render(t_data *data)
 	data->img_data = create_new_img(data->mlx);
 	if (data->img_data.img == NULL)
 	{
-		ft_putstr_fd("Error putting image,\n",1);
+		ft_putstr_fd("Error putting image,\n", 1);
 		free_data(data);
 		exit(EXIT_FAILURE);
 	}

@@ -23,13 +23,13 @@ OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = mlx
-MLX = -L $(MLX_DIR) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm # -lz
-
+MLX = -L $(MLX_DIR) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_LIB = $(MLX_DIR)/libmlx.a
 INCLUDES = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(OBJS)
+$(NAME): $(OBJS) $(LIBFT) $(OBJS) $(MLX_LIB)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT)  -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -51,14 +51,17 @@ $(OBJ_DIR)/render/%.o: $(RENDER_DIR)/%.c
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
+$(MLX_LIB):
+	make -C $(MLX_DIR)
+
 clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBFT_DIR)
-
+	make clean -C $(MLX_DIR)
 fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT_DIR)
-
+	
 re: fclean all
 
 .PHONY: all clean fclean re

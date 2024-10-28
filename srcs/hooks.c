@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:15:38 by bince             #+#    #+#             */
-/*   Updated: 2024/10/25 14:30:29 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:13:48 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	key_press_hook(int keycode, t_data *game_data)
 	if (keycode == RIGHT_ARROW)
 		game_data->rotate = 1;
 	if (keycode == XK_Escape)
-	 	f_exit(game_data);
+		f_exit(game_data);
 	return (0);
 }
 

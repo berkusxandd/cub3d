@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:17:48 by bince             #+#    #+#             */
-/*   Updated: 2024/10/25 14:19:04 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:12:43 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ float	angle_normalizer(float a)
 		a -= 2 * M_PI;
 	return (a);
 }
+
 float	get_perp_dist(t_data *g_data, t_ray ray)
 {
 	float	delta_angle;

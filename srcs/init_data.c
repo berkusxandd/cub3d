@@ -6,7 +6,7 @@
 /*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 14:52:52 by tkaragoz          #+#    #+#             */
-/*   Updated: 2024/10/25 15:58:31 by bince            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:13:58 by bince            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int	init_txtr_imgs(t_data *data)
 	i = -1;
 	while (++i < 4)
 	{
-		t[i].img = mlx_xpm_file_to_image(data->mlx, t[i].f_name, \
-										&t[i].width, &t[i].height);
+		t[i].img = mlx_xpm_file_to_image(data->mlx, t[i].f_name, &t[i].width,
+				&t[i].height);
 		if (!t[i].img)
 			return (EXIT_FAILURE);
 		t[i].addr = mlx_get_data_addr(t[i].img, &bpp, &line_l, &endian);
@@ -33,7 +33,7 @@ static int	init_txtr_imgs(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-float get_init_angle(t_data *data)
+float	get_init_angle(t_data *data)
 {
 	if (data->p_dir == 'N')
 		return (3 * M_PI / 2);
@@ -41,11 +41,11 @@ float get_init_angle(t_data *data)
 		return (0);
 	else if (data->p_dir == 'S')
 		return (M_PI / 2);
-	else 
+	else
 		return (M_PI);
 }
 
-int init_game_data(t_data *data)
+int	init_game_data(t_data *data)
 {
 	data->t1 = 0;
 	data->p_x = data->start_y * TILE_SIZE + 30;
@@ -56,7 +56,7 @@ int init_game_data(t_data *data)
 	data->side_walk = 0;
 	data->fov = M_PI / 4.0;
 	data->speed = 0.2;
-	return 0;
+	return (0);
 }
 
 int	init_data(t_data *data)
