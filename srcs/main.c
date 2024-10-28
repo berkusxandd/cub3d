@@ -14,14 +14,13 @@ int	check_arg(int ac, char **av)
 t_walls	create_walls(float perp_dist)
 {
 	t_walls	walls;
-
 	walls.line_height = (int)(HWIN / perp_dist);
 	walls.draw_start = -walls.line_height / 2 + HWIN / 2;
-	if (walls.draw_start < 0)
-		walls.draw_start = 0;
 	walls.draw_end = walls.line_height / 2 + HWIN / 2;
-	if (walls.draw_end >= HWIN)
-		walls.draw_end = HWIN - 1;
+	walls.tex_start = walls.draw_start;
+	walls.tex_end = walls.draw_end;
+	walls.draw_start = fmax(0, walls.draw_start);
+	walls.draw_end = fmin(HWIN - 1, walls.draw_end);
 	return (walls);
 }
 

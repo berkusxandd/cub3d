@@ -19,7 +19,7 @@ int get_tex_y(t_data *g_data, t_walls walls, t_ray ray, int y)
 {
 	int tex_y;
 
-	tex_y = ((y - walls.draw_start) * g_data->texture[ray.side].height)
+	tex_y = ((y - walls.tex_start) * g_data->texture[ray.side].height)
 		/ walls.line_height;
 	return (tex_y);
 }

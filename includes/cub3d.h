@@ -91,6 +91,8 @@ typedef struct s_walls
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
+	int 		tex_start;
+	int			tex_end;
 	int			color;
 }				t_walls;
 
