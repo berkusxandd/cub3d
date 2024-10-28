@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bince < bince@student.42.fr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/28 14:40:12 by bince             #+#    #+#             */
+/*   Updated: 2024/10/28 14:40:14 by bince            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "../libft/get_next_line.h"
@@ -91,7 +103,7 @@ typedef struct s_walls
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
-	int 		tex_start;
+	int			tex_start;
 	int			tex_end;
 	int			color;
 }				t_walls;
@@ -107,11 +119,11 @@ typedef struct s_wall_tex
 
 typedef struct s_vector2
 {
-	int x;
-	int y;
-}t_vector2;
+	int			x;
+	int			y;
+}				t_vector2;
 
-t_walls	create_walls(float perp_dist);
+t_walls			create_walls(float perp_dist);
 int				init_data(t_data *data);
 t_ray			create_ray(t_data *data, int x);
 int				init_game_data(t_data *data);
@@ -135,7 +147,7 @@ int				is_sidewalking_to_wall(t_data *g_data);
 int				is_walking_to_wall(t_data *g_data);
 
 ///// MOVEMENT 2
-void	player_rotate(t_data *g_data);
+void			player_rotate(t_data *g_data);
 
 ///// HOOKS
 int				key_hook(int keycode, t_data *data);
@@ -148,11 +160,12 @@ float			angle_normalizer(float a);
 void			set_elapsed_time(t_data *g_data);
 
 ///// TEXTURES
-int get_tex_y(t_data *g_data, t_walls walls, t_ray ray, int y);
-void	render_wall_textures(t_data *g_data, t_vector2 v2, t_ray ray,t_walls walls);
-int get_tex_x(t_data *g_data, t_ray ray, float perp_dist);
+int				get_tex_y(t_data *g_data, t_walls walls, t_ray ray, int y);
+void			render_wall_textures(t_data *g_data, t_vector2 v2, t_ray ray,
+					t_walls walls);
+int				get_tex_x(t_data *g_data, t_ray ray, float perp_dist);
 
 ///// RENDER UTILS
-void	render_scene(t_data *g_data);
-void	render_env(t_data *g_data, t_vector2 v2, t_walls walls);
+void			render_scene(t_data *g_data);
+void			render_env(t_data *g_data, t_vector2 v2, t_walls walls);
 #endif
