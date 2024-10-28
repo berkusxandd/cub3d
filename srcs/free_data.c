@@ -26,3 +26,9 @@ void	free_data(t_data *data)
 		data->mlx = NULL;
 	}
 }
+
+int	f_exit(t_data *data)
+{
+	free_data(data);
+	exit(EXIT_SUCCESS);
+}

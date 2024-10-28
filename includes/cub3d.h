@@ -103,6 +103,13 @@ typedef struct s_wall_tex
 	int			color;
 }				t_wall_tex;
 
+typedef struct s_vector2
+{
+	int x;
+	int y;
+}t_vector2;
+
+t_walls	create_walls(float perp_dist);
 int				init_data(t_data *data);
 t_ray			create_ray(t_data *data, int x);
 int				init_game_data(t_data *data);
@@ -125,6 +132,9 @@ float			move_x(t_data *g_data);
 int				is_sidewalking_to_wall(t_data *g_data);
 int				is_walking_to_wall(t_data *g_data);
 
+///// MOVEMENT 2
+void	player_rotate(t_data *g_data);
+
 ///// HOOKS
 int				key_hook(int keycode, t_data *data);
 int				key_release_hook(int keycode, t_data *g_data);
@@ -134,4 +144,13 @@ int				key_press_hook(int keycode, t_data *game_data);
 float			get_perp_dist(t_data *g_data, t_ray ray);
 float			angle_normalizer(float a);
 void			set_elapsed_time(t_data *g_data);
+
+///// TEXTURES
+int get_tex_y(t_data *g_data, t_walls walls, t_ray ray, int y);
+void	render_wall_textures(t_data *g_data, t_vector2 v2, t_ray ray,t_walls walls);
+int get_tex_x(t_data *g_data, t_ray ray, float perp_dist);
+
+///// RENDER UTILS
+void	render_scene(t_data *g_data);
+void	render_env(t_data *g_data, t_vector2 v2, t_walls walls);
 #endif

@@ -33,12 +33,24 @@ static int	init_txtr_imgs(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+float get_init_angle(t_data *data)
+{
+	if (data->p_dir == 'N')
+		return (3 * M_PI / 2);
+	else if (data->p_dir == 'E')
+		return (0);
+	else if (data->p_dir == 'S')
+		return (M_PI / 2);
+	else 
+		return (M_PI);
+}
+
 int init_game_data(t_data *data)
 {
 	data->t1 = 0;
 	data->p_x = data->start_y * TILE_SIZE + 30;
 	data->p_y = data->start_x * TILE_SIZE + 30;
-	data->p_a = 0;
+	data->p_a = get_init_angle(data);
 	data->walk = 0;
 	data->rotate = 0;
 	data->side_walk = 0;

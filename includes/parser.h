@@ -18,10 +18,10 @@
 typedef struct s_data	t_data;
 typedef enum e_dir
 {
+	E,
+	W,
 	N,
 	S,
-	W,
-	E,
 	F,
 	C
 }			t_dir;
